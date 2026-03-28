@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 
-const API_BASE = '/api/employees';
+const API_BASE = '/employees';
 
 export function useUsers() {
   const [users, setUsers] = useState([]);
@@ -13,8 +13,6 @@ export function useUsers() {
       setError(null);
 
       const response = await fetch(`${API_BASE}/`);
-      console.log(response.status)
-      console.log(response.body)
 
       if (!response.ok) {
         throw new Error(`Ошибка HTTP: ${response.status}`);
