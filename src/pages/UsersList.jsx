@@ -15,8 +15,17 @@ export function UsersList() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
-  
-  // Пагинация
+
+  const [formData, setFormData] = useState({
+    name: '',
+    username: '',
+    email: '',
+    group: '',
+    phone: ''
+  });
+  const [actionError, setActionError] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
@@ -87,17 +96,48 @@ export function UsersList() {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (userToDelete) {
-      deleteUser(userToDelete.id);
-      setIsDeleteModalOpen(false);
-      setUserToDelete(null);
+      setActionLoading(true);
+      setActionError(null);
+      const result = await deleteUser(userToDelete.id);
+      setActionLoading(false);
+      if (result.success) {
+        setIsDeleteModalOpen(false);
+        setUserToDelete(null);
+      } else {
+        setActionError(result.error || 'Не удалось удалить пользователя');
+      }
     }
   };
+
 
   const goToPage = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleAddUser = async (e) => {
+    e.preventDefault();
+    if (formData.name) {
+      setActionLoading(true);
+      setActionError(null);
+      const username = formData.username || `companydamian/${formData.name.replace(/\s/g, '')}`;
+      const group = formData.group || 'Unmanaged';
+      const result = await addUser({ ...formData, username, group });
+      setActionLoading(false);
+      if (result.success) {
+        setFormData({ name: '', username: '', email: '', group: '', phone: '' });
+        setIsAddModalOpen(false);
+      } else {
+        setActionError(result.error || 'Не удалось добавить пользователя');
+      }
+    }
+  };
+
+  const getSortIcon = (field) => {
+    if (sortField !== field) return '↕️';
+    return sortDirection === 'asc' ? '↑' : '↓';
   };
 
   if (loading) {
@@ -190,16 +230,17 @@ export function UsersList() {
         </div>
       )}
 
+
       <AddUserModal
         isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
+        onClose={() => { setIsAddModalOpen(false); }}
         onAdd={addUser}
         existingGroups={existingGroups}
       />
 
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
+        onClose={() => { setIsDeleteModalOpen(false); }}
         onConfirm={handleConfirmDelete}
         userName={userToDelete?.name}
       />

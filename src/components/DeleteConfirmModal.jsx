@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function DeleteConfirmModal({ isOpen, onClose, onConfirm, userName }) {
+export function DeleteConfirmModal({ isOpen, onClose, onConfirm, userName, actionLoading }) {
   if (!isOpen) return null;
 
   return (
@@ -17,7 +17,9 @@ export function DeleteConfirmModal({ isOpen, onClose, onConfirm, userName }) {
         </div>
         <div className="modal-actions">
           <button className="cancel" onClick={onClose}>Отмена</button>
-          <button className="danger" onClick={onConfirm}>Удалить</button>
+          <button className="danger" onClick={onConfirm} disabled={actionLoading}>
+            {actionLoading ? 'Удаляется...' : 'Удалить'}
+          </button>
         </div>
       </div>
     </div>

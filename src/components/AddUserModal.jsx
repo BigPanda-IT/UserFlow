@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export function AddUserModal({ isOpen, onClose, onAdd, existingGroups }) {
+export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoading }) {
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -81,7 +81,9 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups }) {
           </div>
           <div className="modal-actions">
             <button type="button" className="cancel" onClick={onClose}>Отмена</button>
-            <button type="submit" className="submit">Добавить</button>
+            <button type="submit" className="submit" disabled={actionLoading}>
+                {actionLoading ? 'Добавление' : 'Добавить'}
+            </button>
           </div>
         </form>
       </div>
