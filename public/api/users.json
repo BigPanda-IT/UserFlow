@@ -1,0 +1,386 @@
+[
+  {
+    "id": "1",
+    "name": "Alberta Petrova",
+    "username": "company/AlbertaPetrova",
+    "email": "alberta.petrova@company.com",
+    "group": "CONVEO",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "2",
+    "name": "Alexander Smirnov",
+    "username": "company/AlexanderSmirnov",
+    "email": "alexander.smirnov@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "3",
+    "name": "Andrey Kuznetsov",
+    "username": "company/AndreyKuznetsov",
+    "email": "andrey.kuznetsov@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "4",
+    "name": "Azobe Popov",
+    "username": "company/AzobePopov",
+    "email": "azobe.popov@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "5",
+    "name": "Bree Sokolov",
+    "username": "company/BreeSokolov",
+    "email": "bree.sokolov@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "6",
+    "name": "Breve Lebedev",
+    "username": "company/BreveLebedev",
+    "email": "breve.lebedev@company.com",
+    "group": "CDM/Financials",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "7",
+    "name": "Carolyn Kozlov",
+    "username": "company/CarolynKozlov",
+    "email": "carolyn.kozlov@company.com",
+    "group": "CDN/Top Kevins",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "8",
+    "name": "Dariene Novikov",
+    "username": "company/DarieneNovikov",
+    "email": "dariene.novikov@company.com",
+    "group": "CDN/Human resources",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "9",
+    "name": "Gold Morozov",
+    "username": "company/GoldMorozov",
+    "email": "gold.morozov@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "10",
+    "name": "Hermelina Volkov",
+    "username": "company/HermelinaVolkov",
+    "email": "hermelina.volkov@company.com",
+    "group": "CDN/Outsourced",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "11",
+    "name": "Kyle Zaitsev",
+    "username": "company/KyleZaitsev",
+    "email": "kyle.zaitsev@company.com",
+    "group": "CDN/Kvants",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "12",
+    "name": "Nikita Soloviev",
+    "username": "company/NikitaSoloviev",
+    "email": "nikita.soloviev@company.com",
+    "group": "CDN/Kvants",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "13",
+    "name": "Ranee Vasiliev",
+    "username": "company/RaneeVasiliev",
+    "email": "ranee.vasiliev@company.com",
+    "group": "CDN/Kvants",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "14",
+    "name": "Sergey Titov",
+    "username": "company/SergeyTitov",
+    "email": "sergey.titov@company.com",
+    "group": "CDN/Managers",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "15",
+    "name": "Sherley Sorokin",
+    "username": "company/SherleySorokin",
+    "email": "sherley.sorokin@company.com",
+    "group": "CDN/Sales",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "16",
+    "name": "Sordels Belov",
+    "username": "company/SordelsBelov",
+    "email": "sordels.belov@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "17",
+    "name": "Travis Orlov",
+    "username": "company/TravisOrlov",
+    "email": "travis.orlov@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "18",
+    "name": "Victor Frolov",
+    "username": "company/VictorFrolov",
+    "email": "victor.frolov@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-66"
+  },
+  {
+    "id": "19",
+    "name": "Anna Petrova",
+    "username": "company/AnnaPetrova",
+    "email": "anna.petrova@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-67"
+  },
+  {
+    "id": "20",
+    "name": "Ivan Smirnov",
+    "username": "company/IvanSmirnov",
+    "email": "ivan.smirnov@company.com",
+    "group": "CDN/Sales",
+    "phone": "+123(456)123-45-68"
+  },
+  {
+    "id": "21",
+    "name": "Maria Kuznetsova",
+    "username": "company/MariaKuznetsova",
+    "email": "maria.kuznetsova@company.com",
+    "group": "CDN/Human resources",
+    "phone": "+123(456)123-45-69"
+  },
+  {
+    "id": "22",
+    "name": "Dmitry Volkov",
+    "username": "company/DmitryVolkov",
+    "email": "dmitry.volkov@company.com",
+    "group": "CDM/Financials",
+    "phone": "+123(456)123-45-70"
+  },
+  {
+    "id": "23",
+    "name": "Elena Sokolova",
+    "username": "company/ElenaSokolova",
+    "email": "elena.sokolova@company.com",
+    "group": "CDN/Kvants",
+    "phone": "+123(456)123-45-71"
+  },
+  {
+    "id": "24",
+    "name": "Alexey Morozov",
+    "username": "company/AlexeyMorozov",
+    "email": "alexey.morozov@company.com",
+    "group": "CDN/Top Kevins",
+    "phone": "+123(456)123-45-72"
+  },
+  {
+    "id": "25",
+    "name": "Olga Novikova",
+    "username": "company/OlgaNovikova",
+    "email": "olga.novikova@company.com",
+    "group": "CDN/Outsourced",
+    "phone": "+123(456)123-45-73"
+  },
+  {
+    "id": "26",
+    "name": "Pavel Kozlov",
+    "username": "company/PavelKozlov",
+    "email": "pavel.kozlov@company.com",
+    "group": "CONVEO",
+    "phone": "+123(456)123-45-74"
+  },
+  {
+    "id": "27",
+    "name": "Tatiana Lebedeva",
+    "username": "company/TatianaLebedeva",
+    "email": "tatiana.lebedeva@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-75"
+  },
+  {
+    "id": "28",
+    "name": "Mikhail Popov",
+    "username": "company/MikhailPopov",
+    "email": "mikhail.popov@company.com",
+    "group": "CDN/Sales",
+    "phone": "+123(456)123-45-76"
+  },
+  {
+    "id": "29",
+    "name": "Natalia Vasilieva",
+    "username": "company/NataliaVasilieva",
+    "email": "natalia.vasilieva@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-77"
+  },
+  {
+    "id": "30",
+    "name": "Sergey Zaitsev",
+    "username": "company/SergeyZaitsev",
+    "email": "sergey.zaitsev@company.com",
+    "group": "CDN/Kvants",
+    "phone": "+123(456)123-45-78"
+  },
+  {
+    "id": "31",
+    "name": "Yulia Pavlova",
+    "username": "company/YuliaPavlova",
+    "email": "yulia.pavlova@company.com",
+    "group": "CDN/Human resources",
+    "phone": "+123(456)123-45-79"
+  },
+  {
+    "id": "32",
+    "name": "Andrey Semenov",
+    "username": "company/AndreySemenov",
+    "email": "andrey.semenov@company.com",
+    "group": "CDM/Financials",
+    "phone": "+123(456)123-45-80"
+  },
+  {
+    "id": "33",
+    "name": "Ksenia Frolova",
+    "username": "company/KseniaFrolova",
+    "email": "ksenia.frolova@company.com",
+    "group": "CDN/Top Kevins",
+    "phone": "+123(456)123-45-81"
+  },
+  {
+    "id": "34",
+    "name": "Vladimir Sorokin",
+    "username": "company/VladimirSorokin",
+    "email": "vladimir.sorokin@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-82"
+  },
+  {
+    "id": "35",
+    "name": "Irina Belova",
+    "username": "company/IrinaBelova",
+    "email": "irina.belova@company.com",
+    "group": "CDN/Outsourced",
+    "phone": "+123(456)123-45-83"
+  },
+  {
+    "id": "36",
+    "name": "Nikolay Orlov",
+    "username": "company/NikolayOrlov",
+    "email": "nikolay.orlov@company.com",
+    "group": "CONVEO",
+    "phone": "+123(456)123-45-84"
+  },
+  {
+    "id": "37",
+    "name": "Ekaterina Vinogradova",
+    "username": "company/EkaterinaVinogradova",
+    "email": "ekaterina.vinogradova@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-85"
+  },
+  {
+    "id": "38",
+    "name": "Denis Makarov",
+    "username": "company/DenisMakarov",
+    "email": "denis.makarov@company.com",
+    "group": "CDN/Sales",
+    "phone": "+123(456)123-45-86"
+  },
+  {
+    "id": "39",
+    "name": "Anastasia Nikitina",
+    "username": "company/AnastasiaNikitina",
+    "email": "anastasia.nikitina@company.com",
+    "group": "CDN/Kvants",
+    "phone": "+123(456)123-45-87"
+  },
+  {
+    "id": "40",
+    "name": "Artem Grigoriev",
+    "username": "company/ArtemGrigoriev",
+    "email": "artem.grigoriev@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-88"
+  },
+  {
+    "id": "41",
+    "name": "Valentina Mironova",
+    "username": "company/ValentinaMironova",
+    "email": "valentina.mironova@company.com",
+    "group": "CDN/Human resources",
+    "phone": "+123(456)123-45-89"
+  },
+  {
+    "id": "42",
+    "name": "Igor Vasilyev",
+    "username": "company/IgorVasilyev",
+    "email": "igor.vasilyev@company.com",
+    "group": "CDM/Financials",
+    "phone": "+123(456)123-45-90"
+  },
+  {
+    "id": "43",
+    "name": "Maria Fedorova",
+    "username": "company/MariaFedorova",
+    "email": "maria.fedorova@company.com",
+    "group": "CDN/Top Kevins",
+    "phone": "+123(456)123-45-91"
+  },
+  {
+    "id": "44",
+    "name": "Alexander Tarasov",
+    "username": "company/AlexanderTarasov",
+    "email": "alexander.tarasov@company.com",
+    "group": "CONVEO",
+    "phone": "+123(456)123-45-92"
+  },
+  {
+    "id": "45",
+    "name": "Elena Yakovleva",
+    "username": "company/ElenaYakovleva",
+    "email": "elena.yakovleva@company.com",
+    "group": "CDN/Outsourced",
+    "phone": "+123(456)123-45-93"
+  },
+  {
+    "id": "46",
+    "name": "Oleg Belov",
+    "username": "company/OlegBelov",
+    "email": "oleg.belov@company.com",
+    "group": "CDM/Managers",
+    "phone": "+123(456)123-45-94"
+  },
+  {
+    "id": "47",
+    "name": "Tatyana Volkova",
+    "username": "company/TatyanaVolkova",
+    "email": "tatyana.volkova@company.com",
+    "group": "CDN/Sales",
+    "phone": "+123(456)123-45-95"
+  },
+  {
+    "id": "48",
+    "name": "Maxim Stepanov",
+    "username": "company/MaximStepanov",
+    "email": "maxim.stepanov@company.com",
+    "group": "Unmanaged",
+    "phone": "+123(456)123-45-96"
+  }
+]

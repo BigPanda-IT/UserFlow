@@ -1,70 +1,130 @@
-# Getting Started with Create React App
+# UserFlow - Система управления пользователями
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## О проекте
 
-## Available Scripts
+UserFlow - это современное React-приложение для управления пользователями и их группами. Приложение позволяет просматривать, добавлять, удалять пользователей, а также фильтровать и сортировать данные.
 
-In the project directory, you can run:
+### Основные возможности
 
-### `npm start`
+- 📊 **Просмотр пользователей** в виде таблицы с возможностью сортировки
+- 🔍 **Умный поиск** по имени, email, группе и телефону с debounce для оптимизации
+- ➕ **Добавление новых пользователей** через модальное окно
+- 🗑️ **Удаление пользователей** с подтверждением
+- 📁 **Группировка пользователей** по отделам
+- 🎨 **Отображение групп**: красиво и наглядно
+- 📱 **Адаптивный дизайн** для всех устройств
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Маршрутизация и роутеры
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+/ — приветственная страница
+/users — страница с таблией пользователей
+/groups — страница групп
 
-### `npm test`
+## Данные и их структура
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+{
+  "id": "1",
+  "name": "Alberta Catharine",
+  "username": "company/AlbertaCatharine",
+  "email": "AlbertaCatharine@company.com",
+  "group": "CONVEO",
+  "phone": "+123(456)123-45-66"
+}
 
-### `npm run build`
+## Структура проекта
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+user-management-app/
+├── public/
+│   ├── api/
+│   │   └── users.json
+│   ├── images/
+│   │   └── logo.png
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── manifest.json
+│   └── robots.txt
+├── src/
+│   ├── hooks/
+│   │   ├── useUsers.js
+│   │   └── useDebounce.js
+│   ├── pages/
+│   │   ├── Welcome.jsx
+│   │   ├── Welcome.css
+│   │   ├── UsersList.jsx
+│   │   ├── UsersList.css
+│   │   ├── Groups.jsx
+│   │   └── Groups.css
+│   ├── App.css
+│   ├── App.js
+│   ├── index.css
+│   └── index.js
+├── .gitignore
+├── package-lock.json
+├── package.json
+└── README.md
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Технологии
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **React 18** - библиотека для построения интерфейсов
+- **React Router v6** - маршрутизация
+- **CSS3** - стилизация с анимациями
+- **Custom Hooks** - для бизнес-логики
+- **useMemo/useCallback** - оптимизация производительности
 
-### `npm run eject`
+## Установка и запуск
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Требования
+- Node.js 16+ 
+- npm 8+
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Шаги для запуска
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **Клонировать репозиторий**
+   git clone <repository-url>
+   cd user-management-app
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Установить зависимости**
+   npm install
 
-## Learn More
+3. **Запустить в режиме разработки**
+   npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Собрать для production**
+   npm run build
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Выводы по проектированию UI
 
-### Code Splitting
+### Разработка вручную (страница UsersList)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+При создании страницы управления пользователями я использовала ручной подход, что позволило:
 
-### Analyzing the Bundle Size
+- **Полностью контролировать логику** — поиск с debounce, сортировка, фильтрация реализованы с учётом конкретных требований
+- **Оптимизировать производительность** — применила `useMemo`, `useCallback`, `useDebounce` для фильтрации и сортировки
+- **Глубоко понять код** — собственное написание упрощает отладку и поддержку
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Сложности:** потребовалось больше времени на проектирование структуры компонентов и обработку краевых случаев (пустой поиск, отсутствие данных, ошибки загрузки и т.д.).
 
-### Making a Progressive Web App
+### Разработка с помощью LLM (страница Groups)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Страницу групп я создавала с использованием LLM (DeepSeek) и работа дала следующие результаты:
 
-### Advanced Configuration
+- **Высокая скорость** — базовая структура и стили были сгенерированы за минуты
+- **Креативные решения** — LLM предложила уникальные иконки для каждой группы, цветовую схему, анимации раскрытия
+- **Адаптивность** — медиа-запросы для мобильных устройств были сгенерированы автоматически
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Сложности:** пришлось дорабатывать сгенерированный код:
+- Исправлять логику раскрытия групп
+- Добавлять уникальные иконки и цвета для групп самостоятельно, так как сочетание было сгенерировано на рандом
+- Корректировать CSS, чтобы inline-стили не переопределялись и сочетались между собой и чтобы страница была привлекательной и нравилась пользователю
 
-### Deployment
+### Сравнение и выводы
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+| Критерий      | Личная разработка  | LLM                              |
+|---------------|--------------------|-------------------------- -------|
+| Скорость      | Низкая             | Высокая                          |
+| Контроль      | Полный             | Требует долгой и точной проверки |
+| Качество кода | Предсказуемое      | Может быть избыточным            |
+| Креативность  | Ограничена автором | Высокая                          |
+| Поддержка     | Лёгкая             | Сложная                          |
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Итоговый вывод:** Оптимальный подход — комбинированный. LLM отлично подходит для быстрого прототипирования и генерации идей, а ручная доработка обеспечивает качество, производительность и понимание кода.
