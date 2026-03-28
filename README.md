@@ -55,6 +55,8 @@ user-management-app/
 │   │   ├── DeleteConfirmModal.jsx
 │   │   ├── SearchBar.jsx
 │   │   ├── UsersTable.jsx
+|   |   ├── UsersTable.css
+|   |   └── Modal.css
 |   |
 │   ├── hooks/
 │   │   ├── useUsers.js
@@ -74,6 +76,8 @@ user-management-app/
 │   └── index.js
 |
 ├── .gitignore
+├── Dockerfile
+├── nginx.conf
 ├── package-lock.json
 ├── package.json
 └── README.md
@@ -82,9 +86,10 @@ user-management-app/
 ## Технологии
 
 - **React 18** - фреймворк для построения интерфейсов
-- **React Router v6** - маршрутизация
-- **CSS3** - стилизация с анимациями
-- **Custom Hooks** - для бизнес-логики
+- **Docker** - контейнеризация для удобного развертывания проекта
+- **Nginx** - сервер для статических файлов
+- **Git** - для версионирования проекта
+- **Yandex Cloud** - хостинг
 
 ## Установка и запуск
 
@@ -92,30 +97,32 @@ user-management-app/
 - Node.js 16+ 
 - npm 8+
 
-### Шаги для запуска
+### Как запускать проект
+
+Перейти по ссылке <http://51.250.105.3:8003/>
+
+Альтернативно можно запустить проект локально (но ему нужен доступ к сети для походов на бэкенд):
 
 1. **Клонировать репозиторий**
-   git clone <repository-url>
-   cd user-management-app
+   `git clone git@github.com:BigPanda-IT/UserFlow.git`
+   `cd user-management-app`
 
 2. **Установить зависимости**
-   npm install
+   `npm install`
 
 3. **Запустить в режиме разработки**
-   npm start
+   `npm start`
 
-Альтернативно можно запустить с помощью Docker:
+Либо запустить с помощью Docker:
 
 1. **Сборка образа**
-   docker build -t user-management-app .
+   `docker build -t user-management-app .`
 
 2. **Запуск контейнера**
-   docker run -p 3000:3000 user-management-app
+   `docker run -p 8000:8003 user-management-app`
 
 3. **Открыть в браузере**
-   http://localhost:3000
-
-Либо перейти по ссылке <http://51.250.105.3:8003/>
+   <http://localhost:8000>
 
 ## Выводы по проектированию UI
 
@@ -148,7 +155,7 @@ user-management-app/
 |---------------|--------------------|----------------------------------|
 | Скорость      | Низкая             | Высокая                          |
 | Контроль      | Полный             | Требует долгой и точной проверки |
-| Качество кода | Предсказуемое      | Может быть избыточным            |
+| Качество кода | Предсказуемое      | Непредсказуемое                  |
 | Креативность  | Ограничена автором | Высокая                          |
 | Поддержка     | Лёгкая             | Сложная                          |
 
