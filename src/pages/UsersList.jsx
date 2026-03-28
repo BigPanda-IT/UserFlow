@@ -29,7 +29,7 @@ export function UsersList() {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   // Фильтрация
   const filteredUsers = useMemo(() => {
@@ -39,7 +39,9 @@ export function UsersList() {
       user.name.toLowerCase().includes(term) ||
       user.email.toLowerCase().includes(term) ||
       user.username.toLowerCase().includes(term) ||
-      user.group.toLowerCase().includes(term) ||
+      (
+        user.group && user.group.toLowerCase().includes(term) 
+      )||
       user.phone.includes(term)
     );
   }, [users, debouncedSearchTerm]);

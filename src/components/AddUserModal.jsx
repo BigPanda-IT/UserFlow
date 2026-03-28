@@ -6,19 +6,77 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoa
     username: '',
     email: '',
     group: '',
-    phone: ''
+    phone: '+7 (9',
   });
+
+  // Функция форматирования телефона
+  const formatPhone = (value) => {
+    // Удаляем все не-цифры
+    const numbers = value.replace(/\D/g, '');
+    
+    // Ограничиваем 11 цифрами (код страны 7 + 10 цифр)
+    const limited = numbers.slice(0, 11);
+    
+    if (limited.length === 0) return '';
+    
+    let formatted = '+7';
+    
+    if (limited.length > 1) {
+      formatted += ` (${limited.slice(1, 4)}`;
+    } else if (limited.length === 1) {
+      formatted += ' (';
+    }
+    
+    if (limited.length > 4) {
+      formatted += `) ${limited.slice(4, 7)}`;
+    } else if (limited.length > 1 && limited.length <= 4) {
+      formatted += ')';
+    }
+    
+    if (limited.length > 7) {
+      formatted += `-${limited.slice(7, 9)}`;
+    }
+    
+    if (limited.length > 9) {
+      formatted += `-${limited.slice(9, 11)}`;
+    }
+    
+    return formatted;
+  };
+
+  const handlePhoneChange = (e) => {
+    const rawValue = e.target.value;
+    // Если поле пустое, возвращаем +7 (9
+    if (!rawValue.replace(/\D/g, '')) {
+      setFormData({ ...formData, phone: '+7 (9' });
+      return;
+    }
+    const formatted = formatPhone(rawValue);
+    setFormData({ ...formData, phone: formatted });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.name && formData.email) {
-      const username = formData.username || `company/${formData.name.replace(/\s/g, '')}`;
-      const group = formData.group || 'Unmanaged';
-      onAdd({ ...formData, username, group });
-      setFormData({ name: '', username: '', email: '', group: '', phone: '' });
-      onClose();
+    if (formData.name && formData.email && formData.username) {
+        const group = formData.group || 'Unmanaged';
+        const cleanPhone = formData.phone.replace(/\D/g, '');
+        onAdd({ ...formData, phone: cleanPhone, group });
+        
+        // Сначала сбрасываем форму
+        setFormData({ 
+        name: '', 
+        username: '', 
+        email: '', 
+        group: '', 
+        phone: '+7 (9'
+        });
+        
+        // Затем закрываем модалку
+        setTimeout(() => {
+        onClose();
+        }, 0);
     }
-  };
+    };
 
   if (!isOpen) return null;
 
@@ -40,12 +98,12 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoa
             />
           </div>
           <div className="form-group">
-            <label>Username</label>
+            <label>Username *</label>
             <input
               type="text"
               value={formData.username}
               onChange={e => setFormData({ ...formData, username: e.target.value })}
-              placeholder="company/username"
+              required
             />
           </div>
           <div className="form-group">
@@ -76,7 +134,9 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoa
             <input
               type="tel"
               value={formData.phone}
-              onChange={e => setFormData({ ...formData, phone: e.target.value })}
+              onChange={handlePhoneChange}
+              className="phone-input"
+              placeholder="+7 (___) ___-__-__"
             />
           </div>
           <div className="modal-actions">

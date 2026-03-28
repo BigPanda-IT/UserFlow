@@ -36,8 +36,8 @@ export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }
                 <td className="username">@{user.username?.split('/').pop()}</td>
                 <td className="email">{user.email}</td>
                 <td>
-                  <span className={`badge ${user.group === 'Unmanaged' ? 'badge-warning' : 'badge-default'}`}>
-                    {user.group === 'Unmanaged' ? 'Unmanaged' : user.group || '—'}
+                  <span span className={`badge ${!user.group || user.group === 'Unmanaged' || user.group === 'unmanaged' ? 'badge-warning' : 'badge-default'}`}>
+                    {!user.group || user.group === 'Unmanaged' || user.group === 'unmanaged' ? 'Unmanaged' : user.group}
                   </span>
                 </td>
                 <td>{user.phone}</td>
