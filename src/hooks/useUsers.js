@@ -41,6 +41,21 @@ export function useUsers() {
     setUsers(prev => prev.filter(user => user.id !== id));
   }, []);
 
+  const existingGroups = useMemo(() => {
+    const groupSet = new Set();
+    users.forEach(user => {
+      if (user.group && user.group !== 'Unmanaged') {
+        groupSet.add(user.group);
+      }
+    });
+    return Array.from(groupSet).sort();
+  }, [users]);
+
+  useEffect(() => {
+  console.log('Всего пользователей:', users.length);
+  console.log('Последний пользователь:', users[users.length - 1]);
+}, [users]);
+
   const groups = useMemo(() => {
     const groupMap = new Map();
     
@@ -73,5 +88,6 @@ export function useUsers() {
     deleteUser,
     groups,
     unmanagedUsers,
+    existingGroups,
   };
 }

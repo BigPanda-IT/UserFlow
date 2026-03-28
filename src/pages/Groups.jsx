@@ -3,7 +3,7 @@ import { useUsers } from '../hooks/useUsers';
 import './Groups.css';
 
 export function Groups() {
-  const { groups, unmanagedUsers, loading, error } = useUsers();
+  const { groups, unmanagedUsers, loading, error} = useUsers();
   const [selectedGroup, setSelectedGroup] = useState(null);
 
   const getGroupStyle = (groupName) => {

@@ -1,26 +1,24 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useUsers } from '../hooks/useUsers';
 import { useDebounce } from '../hooks/useDebounce';
+import { SearchBar } from '../components/SearchBar';
+import { UsersTable } from '../components/UsersTable';
+import { AddUserModal } from '../components/AddUserModal';
+import { DeleteConfirmModal } from '../components/DeleteConfirmModal';
 import './UsersList.css';
 
 export function UsersList() {
-  const { users, loading, error, addUser, deleteUser } = useUsers();
+  const { users, loading, error, addUser, deleteUser, existingGroups } = useUsers();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    username: '',
-    email: '',
-    group: '',
-    phone: ''
-  });
-
+  
+  // Пагинация
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10; // const
+  const usersPerPage = 10;
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
@@ -61,25 +59,19 @@ export function UsersList() {
     });
   }, [filteredUsers, sortField, sortDirection]);
 
+  // Текущие пользователи (пагинация)
   const currentUsers = useMemo(() => {
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     return sortedUsers.slice(indexOfFirstUser, indexOfLastUser);
-  }, [sortedUsers, currentPage]);
+  }, [sortedUsers, currentPage, usersPerPage]);
 
-  // Вычисляем количество страниц
   const totalPages = Math.ceil(sortedUsers.length / usersPerPage);
 
+  // Сброс на первую страницу при поиске или сортировке
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, sortField, sortDirection]);
-
-  // Функция для смены страницы
-  const goToPage = (page) => {
-    setCurrentPage(page);
-    // Прокручиваем вверх страницы
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -103,20 +95,9 @@ export function UsersList() {
     }
   };
 
-  const handleAddUser = (e) => {
-    e.preventDefault();
-    if (formData.name && formData.email) {
-      const username = formData.username || `companydamian/${formData.name.replace(/\s/g, '')}`;
-      const group = formData.group || 'Unmanaged';
-      addUser({ ...formData, username, group });
-      setFormData({ name: '', username: '', email: '', group: '', phone: '' });
-      setIsAddModalOpen(false);
-    }
-  };
-
-  const getSortIcon = (field) => {
-    if (sortField !== field) return '↕️';
-    return sortDirection === 'asc' ? '↑' : '↓';
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (loading) {
@@ -147,8 +128,8 @@ export function UsersList() {
         <div>
           <h1>👥 Пользователи</h1>
           <p className="stats">
-            Всего: {users.length} | Найдено: {sortedUsers.length} |
-            Страница: {currentPage} из {totalPages}
+            Всего: {users.length} | Найдено: {sortedUsers.length} | 
+            Страница: {currentPage} из {totalPages || 1}
           </p>
         </div>
         <button className="add-btn" onClick={() => setIsAddModalOpen(true)}>
@@ -156,64 +137,15 @@ export function UsersList() {
         </button>
       </div>
 
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Поиск по имени, email, группе..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-        {searchTerm && (
-          <button className="clear-btn" onClick={() => setSearchTerm('')}>✕</button>
-        )}
-      </div>
+      <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-      <div className="table-wrapper">
-        <table className="users-table">
-          <thead>
-            <tr>
-              <th onClick={() => handleSort('id')} className="sortable">ID {getSortIcon('id')}</th>
-              <th onClick={() => handleSort('name')} className="sortable">Имя {getSortIcon('name')}</th>
-              <th onClick={() => handleSort('username')} className="sortable">Username {getSortIcon('username')}</th>
-              <th onClick={() => handleSort('email')} className="sortable">Email {getSortIcon('email')}</th>
-              <th onClick={() => handleSort('group')} className="sortable">Группа {getSortIcon('group')}</th>
-              <th onClick={() => handleSort('phone')} className="sortable">Телефон {getSortIcon('phone')}</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.length === 0 ? (
-              <tr>
-                <td colSpan="7" className="empty">
-                  <div>📭</div>
-                  <p>Пользователи не найдены</p>
-                </td>
-              </tr>
-            ) : (
-              currentUsers.map(user => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td className="user-name">{user.name}</td>
-                  <td className="username">@{user.username?.split('/').pop()}</td>
-                  <td className="email">{user.email}</td>
-                  <td>
-                    <span className={`badge ${user.group === 'Unmanaged' || !user.group ? 'badge-warning' : 'badge-default'}`}>
-                      {user.group === 'Unmanaged' || !user.group ? 'Unmanaged' : user.group}
-                    </span>
-                  </td>
-                  <td>{user.phone}</td>
-                  <td>
-                    <button className="delete-btn" onClick={() => handleDeleteClick(user)}>
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      <UsersTable
+        users={currentUsers}
+        sortField={sortField}
+        sortDirection={sortDirection}
+        onSort={handleSort}
+        onDelete={handleDeleteClick}
+      />
 
       {/* Пагинация */}
       {sortedUsers.length > usersPerPage && (
@@ -229,14 +161,15 @@ export function UsersList() {
           <div className="pagination-pages">
             {Array.from({ length: totalPages }, (_, i) => i + 1)
               .filter(page => {
-                // Показываем текущую страницу, соседние и первую/последнюю
                 return page === 1 || 
-                      page === totalPages || 
-                      (page >= currentPage - 2 && page <= currentPage + 2);
+                       page === totalPages || 
+                       (page >= currentPage - 2 && page <= currentPage + 2);
               })
               .map((page, idx, arr) => (
                 <React.Fragment key={page}>
-                  {idx > 0 && arr[idx - 1] !== page - 1 && <span className="pagination-dots">...</span>}
+                  {idx > 0 && arr[idx - 1] !== page - 1 && (
+                    <span className="pagination-dots">...</span>
+                  )}
                   <button
                     onClick={() => goToPage(page)}
                     className={`pagination-page ${currentPage === page ? 'active' : ''}`}
@@ -257,64 +190,19 @@ export function UsersList() {
         </div>
       )}
 
-      {/* Модалка добавления */}
-      {isAddModalOpen && (
-        <div className="modal" onClick={() => setIsAddModalOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>Добавить пользователя</h2>
-              <button className="close" onClick={() => setIsAddModalOpen(false)}>✕</button>
-            </div>
-            <form onSubmit={handleAddUser}>
-              <div className="form-group">
-                <label>Имя *</label>
-                <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required />
-              </div>
-              <div className="form-group">
-                <label>Username</label>
-                <input type="text" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} placeholder="companydamian/username" />
-              </div>
-              <div className="form-group">
-                <label>Email *</label>
-                <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required />
-              </div>
-              <div className="form-group">
-                <label>Группа</label>
-                <input type="text" value={formData.group} onChange={e => setFormData({...formData, group: e.target.value})} placeholder="CDM/Managers" />
-              </div>
-              <div className="form-group">
-                <label>Телефон</label>
-                <input type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
-              </div>
-              <div className="modal-actions">
-                <button type="button" className="cancel" onClick={() => setIsAddModalOpen(false)}>Отмена</button>
-                <button type="submit" className="submit">Добавить</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <AddUserModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAdd={addUser}
+        existingGroups={existingGroups}
+      />
 
-      {/* Модалка удаления */}
-      {isDeleteModalOpen && userToDelete && (
-        <div className="modal" onClick={() => setIsDeleteModalOpen(false)}>
-          <div className="modal-content small" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>Подтверждение</h2>
-              <button className="close" onClick={() => setIsDeleteModalOpen(false)}>✕</button>
-            </div>
-            <div className="modal-body">
-              <div className="warning-icon">⚠️</div>
-              <p>Удалить пользователя <strong>{userToDelete.name}</strong>?</p>
-              <p className="warning-text">Это действие нельзя отменить</p>
-            </div>
-            <div className="modal-actions">
-              <button className="cancel" onClick={() => setIsDeleteModalOpen(false)}>Отмена</button>
-              <button className="danger" onClick={handleConfirmDelete}>Удалить</button>
-            </div>
-          </div>
-        </div>
-      )}
+      <DeleteConfirmModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        userName={userToDelete?.name}
+      />
     </div>
   );
 }
