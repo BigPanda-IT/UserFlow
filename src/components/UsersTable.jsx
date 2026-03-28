@@ -34,7 +34,16 @@ export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }
                 <td>{user.id}</td>
                 <td className="user-name">{user.name}</td>
                 <td className="username">@{user.username?.split('/').pop()}</td>
-                <td className="email">{user.email}</td>
+                <td className="email">
+                    <a 
+                        href={`mailto:${user.email}`}
+                        className="email-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {user.email}
+                    </a>
+                </td>
                 <td>
                   <span span className={`badge ${!user.group || user.group === 'Unmanaged' || user.group === 'unmanaged' ? 'badge-warning' : 'badge-default'}`}>
                     {!user.group || user.group === 'Unmanaged' || user.group === 'unmanaged' ? 'Unmanaged' : user.group}

@@ -131,6 +131,19 @@
 
 .email {
   color: #90e0ef !important;
+  padding: 14px 20px;
+}
+
+.email-link {
+  color: #90e0ef;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.email-link:hover {
+  color: #00b4d8;
+  text-decoration: underline;
 }
 
 .badge {
