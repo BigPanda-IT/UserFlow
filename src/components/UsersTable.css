@@ -1,0 +1,55 @@
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.copyable-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copy-icon {
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.copy-icon:hover {
+  transform: scale(1.1);
+}
+
+.copy-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideInRight 0.3s ease;
+}
