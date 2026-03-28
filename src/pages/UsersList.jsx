@@ -18,6 +18,8 @@ export function UsersList() {
     group: '',
     phone: ''
   });
+  const [actionError, setActionError] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10; // const
@@ -95,22 +97,36 @@ export function UsersList() {
     setIsDeleteModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (userToDelete) {
-      deleteUser(userToDelete.id);
-      setIsDeleteModalOpen(false);
-      setUserToDelete(null);
+      setActionLoading(true);
+      setActionError(null);
+      const result = await deleteUser(userToDelete.id);
+      setActionLoading(false);
+      if (result.success) {
+        setIsDeleteModalOpen(false);
+        setUserToDelete(null);
+      } else {
+        setActionError(result.error || 'Не удалось удалить пользователя');
+      }
     }
   };
 
-  const handleAddUser = (e) => {
+  const handleAddUser = async (e) => {
     e.preventDefault();
-    if (formData.name && formData.email) {
+    if (formData.name) {
+      setActionLoading(true);
+      setActionError(null);
       const username = formData.username || `companydamian/${formData.name.replace(/\s/g, '')}`;
       const group = formData.group || 'Unmanaged';
-      addUser({ ...formData, username, group });
-      setFormData({ name: '', username: '', email: '', group: '', phone: '' });
-      setIsAddModalOpen(false);
+      const result = await addUser({ ...formData, username, group });
+      setActionLoading(false);
+      if (result.success) {
+        setFormData({ name: '', username: '', email: '', group: '', phone: '' });
+        setIsAddModalOpen(false);
+      } else {
+        setActionError(result.error || 'Не удалось добавить пользователя');
+      }
     }
   };
 
@@ -259,11 +275,11 @@ export function UsersList() {
 
       {/* Модалка добавления */}
       {isAddModalOpen && (
-        <div className="modal" onClick={() => setIsAddModalOpen(false)}>
+        <div className="modal" onClick={() => { setIsAddModalOpen(false); setActionError(null); }}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>Добавить пользователя</h2>
-              <button className="close" onClick={() => setIsAddModalOpen(false)}>✕</button>
+              <button className="close" onClick={() => { setIsAddModalOpen(false); setActionError(null); }}>✕</button>
             </div>
             <form onSubmit={handleAddUser}>
               <div className="form-group">
@@ -275,8 +291,8 @@ export function UsersList() {
                 <input type="text" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} placeholder="companydamian/username" />
               </div>
               <div className="form-group">
-                <label>Email *</label>
-                <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required />
+                <label>Email</label>
+                <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
               </div>
               <div className="form-group">
                 <label>Группа</label>
@@ -286,9 +302,12 @@ export function UsersList() {
                 <label>Телефон</label>
                 <input type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
               </div>
+              {actionError && <p className="form-error">⚠️ {actionError}</p>}
               <div className="modal-actions">
-                <button type="button" className="cancel" onClick={() => setIsAddModalOpen(false)}>Отмена</button>
-                <button type="submit" className="submit">Добавить</button>
+                <button type="button" className="cancel" onClick={() => { setIsAddModalOpen(false); setActionError(null); }}>Отмена</button>
+                <button type="submit" className="submit" disabled={actionLoading}>
+                  {actionLoading ? 'Добавление...' : 'Добавить'}
+                </button>
               </div>
             </form>
           </div>
@@ -297,20 +316,23 @@ export function UsersList() {
 
       {/* Модалка удаления */}
       {isDeleteModalOpen && userToDelete && (
-        <div className="modal" onClick={() => setIsDeleteModalOpen(false)}>
+        <div className="modal" onClick={() => { setIsDeleteModalOpen(false); setActionError(null); }}>
           <div className="modal-content small" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>Подтверждение</h2>
-              <button className="close" onClick={() => setIsDeleteModalOpen(false)}>✕</button>
+              <button className="close" onClick={() => { setIsDeleteModalOpen(false); setActionError(null); }}>✕</button>
             </div>
             <div className="modal-body">
               <div className="warning-icon">⚠️</div>
               <p>Удалить пользователя <strong>{userToDelete.name}</strong>?</p>
               <p className="warning-text">Это действие нельзя отменить</p>
+              {actionError && <p className="form-error">⚠️ {actionError}</p>}
             </div>
             <div className="modal-actions">
-              <button className="cancel" onClick={() => setIsDeleteModalOpen(false)}>Отмена</button>
-              <button className="danger" onClick={handleConfirmDelete}>Удалить</button>
+              <button className="cancel" onClick={() => { setIsDeleteModalOpen(false); setActionError(null); }}>Отмена</button>
+              <button className="danger" onClick={handleConfirmDelete} disabled={actionLoading}>
+                {actionLoading ? 'Удаление...' : 'Удалить'}
+              </button>
             </div>
           </div>
         </div>
