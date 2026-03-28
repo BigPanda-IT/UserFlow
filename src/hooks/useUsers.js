@@ -7,6 +7,25 @@ export function useUsers() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const showNotification = (message) => {
+    const oldNotifications = document.querySelectorAll('.copy-notification');
+    oldNotifications.forEach(notif => notif.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = 'copy-notification';
+    notification.innerHTML = `
+      <span>${message}</span>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add('hide');
+      setTimeout(() => notification.remove(), 300);
+    }, 2000);
+  };
+
+
   const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
@@ -46,14 +65,22 @@ export function useUsers() {
 
       const created = await response.json();
       setUsers(prev => [...prev, created]);
+
+      showNotification(`✅ Пользователь "${newUser.name}" добавлен`);
+      
       return { success: true, user: created };
     } catch (err) {
       console.error('Ошибка добавления:', err);
+      showNotification(`❌ Ошибка: ${err.message}`);
       return { success: false, error: err.message };
     }
   }, []);
 
   const deleteUser = useCallback(async (id) => {
+
+    const userToDelete = users.find(user => user.id === id);
+    const userName = userToDelete?.name || 'Пользователь';
+
     try {
       const response = await fetch(`${API_BASE}/${id}`, {
         method: 'DELETE',
@@ -64,6 +91,9 @@ export function useUsers() {
       }
 
       setUsers(prev => prev.filter(user => user.id !== id));
+
+      showNotification(`🗑️ Пользователь "${userName}" удален`);
+
       return { success: true };
     } catch (err) {
       console.error('Ошибка удаления:', err);

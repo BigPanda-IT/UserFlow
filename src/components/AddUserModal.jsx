@@ -5,7 +5,7 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoa
     name: '',
     username: '',
     email: '',
-    group: '',
+    group: null,
     phone: '+7 (9',
   });
 
@@ -58,16 +58,15 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoa
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.username) {
-        const group = formData.group || 'Unmanaged';
-        const cleanPhone = formData.phone.replace(/\D/g, '');
-        onAdd({ ...formData, phone: cleanPhone, group });
+        const group = formData.group === 'Unmanaged' ? null : formData.group;
+        onAdd({ ...formData, phone: formData.phone, group });
         
         // Сначала сбрасываем форму
         setFormData({ 
         name: '', 
         username: '', 
         email: '', 
-        group: '', 
+        group: null, 
         phone: '+7 (9'
         });
         
@@ -122,7 +121,7 @@ export function AddUserModal({ isOpen, onClose, onAdd, existingGroups, actionLoa
               onChange={e => setFormData({ ...formData, group: e.target.value })}
               className="select-input"
             >
-              <option value="">-- Выберите группу --</option>
+              <option value={null}>-- Выберите группу --</option>
               <option value="Unmanaged">Unmanaged</option>
               {existingGroups.map(group => (
                 <option key={group} value={group}>{group}</option>
