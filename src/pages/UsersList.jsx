@@ -63,8 +63,10 @@ export function UsersList() {
       }
 
       if (sortField === 'group') {
-        aVal = aVal ? aVal.group : 'Unmanaged';
-        bVal = bVal ? bVal.group : 'Unmanaged';
+        if (!aVal) 
+          aVal = 'Unmanaged';
+        if (!bVal) 
+          bVal = 'Unmanaged';
       }
       
       if (typeof aVal === 'string') {
