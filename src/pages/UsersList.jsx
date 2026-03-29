@@ -41,7 +41,10 @@ export function UsersList() {
       user.username.toLowerCase().includes(term) ||
       (
         user.group && user.group.toLowerCase().includes(term) 
-      )||
+      ) ||
+      (
+        !user.group && 'Unmanaged'.toLowerCase().includes(term)
+      ) ||
       user.phone.includes(term)
     );
   }, [users, debouncedSearchTerm]);
@@ -57,6 +60,11 @@ export function UsersList() {
       if (sortField === 'id') {
         aVal = parseInt(aVal);
         bVal = parseInt(bVal);
+      }
+
+      if (sortField === 'group') {
+        aVal = aVal ? aVal.group : 'Unmanaged';
+        bVal = bVal ? bVal.group : 'Unmanaged';
       }
       
       if (typeof aVal === 'string') {
