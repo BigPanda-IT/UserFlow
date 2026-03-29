@@ -23,6 +23,7 @@
 .logo-text {
   font-size: 24px;
   font-weight: 700;
+  cursor: pointer;
   background: linear-gradient(135deg, #00b4d8 0%, #90e0ef 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

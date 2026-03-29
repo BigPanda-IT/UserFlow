@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import { Welcome } from './pages/Welcome';
 import { UsersList } from './pages/UsersList';
@@ -7,11 +7,12 @@ import { Groups } from './pages/Groups';
 
 function Navigation() {
   const location = useLocation();
+  const navigate = useNavigate();
   
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate('/')}>
           <img src="https://cdn3.iconfinder.com/data/icons/ux-ui/512/user_flow-1024.png" alt="picture-logo" className="logo-icon"/>
           <span className="logo-text">UserFlow</span>
         </div>
