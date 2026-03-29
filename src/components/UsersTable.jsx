@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import './UsersTable.css';
 
 export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }) {
-  const [hoveredId, setHoveredId] = useState(null);
-  const [hoveredField, setHoveredField] = useState(null);
-  const [copyIconPosition, setCopyIconPosition] = useState({ x: 0, y: 0, visible: false });
 
   const getSortIcon = (field) => {
     if (sortField !== field) return '↕️';
@@ -110,55 +107,8 @@ export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }
     }, 2000);
   };
 
-  const handleMouseEnter = (event, userId, field) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const scrollX = window.scrollX || window.pageXOffset;
-    const scrollY = window.scrollY || window.pageYOffset;
-    
-    setCopyIconPosition({
-      x: rect.right + scrollX - 30,
-      y: rect.top + scrollY + rect.height / 2 - 12,
-      visible: true
-    });
-    setHoveredId(userId);
-    setHoveredField(field);
-  };
-
-  const handleMouseLeave = () => {
-    setCopyIconPosition(prev => ({ ...prev, visible: false }));
-    setHoveredId(null);
-    setHoveredField(null);
-  };
-
   return (
     <div className="table-wrapper">
-      {copyIconPosition.visible && (
-        <span
-          className="copy-icon"
-          style={{
-            left: `${copyIconPosition.x}px`,
-            top: `${copyIconPosition.y}px`
-          }}
-          onClick={() => {
-            const user = users.find(u => u.id === hoveredId);
-            if (!user) return;
-            
-            let textToCopy = '';
-            switch (hoveredField) {
-              case 'id': textToCopy = user.id; break;
-              case 'name': textToCopy = user.name; break;
-              case 'username': textToCopy = user.username?.split('/').pop() || user.username; break;
-              case 'email': textToCopy = user.email; break;
-              case 'group': textToCopy = user.group || 'Unmanaged'; break;
-              case 'phone': textToCopy = user.phone; break;
-              default: return;
-            }
-            copyToClipboard(textToCopy);
-          }}
-        >
-          📋
-        </span>
-      )}
       <table className="users-table">
         <thead>
           <tr>
@@ -183,64 +133,82 @@ export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }
             users.map(user => (
               <tr key={user.id}>
                 {/* ID */}
-                <td
-                  onMouseEnter={(e) => handleMouseEnter(e, user.id, 'id')}
-                  onMouseLeave={handleMouseLeave}
-                >
+                <td>
                   <div className="copyable-cell">
                     <span>{user.id}</span>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard(user.id)}
+                    >
+                      📋
+                    </span>
                   </div>
                 </td>
 
                 {/* Имя */}
-                <td
-                  onMouseEnter={(e) => handleMouseEnter(e, user.id, 'name')}
-                  onMouseLeave={handleMouseLeave}
-                >
+                <td>
                   <div className="copyable-cell">
                     <span>{user.name}</span>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard(user.name)}
+                    >
+                      📋
+                    </span>
                   </div>
                 </td>
 
                 {/* Username */}
-                <td
-                  onMouseEnter={(e) => handleMouseEnter(e, user.id, 'username')}
-                  onMouseLeave={handleMouseLeave}
-                >
+                <td>
                   <div className="copyable-cell">
                     <span>@{user.username?.split('/').pop()}</span>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard(user.username?.split('/').pop() || user.username)}
+                    >
+                      📋
+                    </span>
                   </div>
                 </td>
 
                 {/* Email */}
-                <td
-                  onMouseEnter={(e) => handleMouseEnter(e, user.id, 'email')}
-                  onMouseLeave={handleMouseLeave}
-                >
+                <td>
                   <div className="copyable-cell">
                     <span>{user.email}</span>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard(user.email)}
+                    >
+                      📋
+                    </span>
                   </div>
                 </td>
 
                 {/* Группа */}
-                <td
-                  onMouseEnter={(e) => handleMouseEnter(e, user.id, 'group')}
-                  onMouseLeave={handleMouseLeave}
-                >
+                <td>
                   <div className="copyable-cell">
                     <span className={`badge ${!user.group || user.group === 'Unmanaged' ? 'badge-warning' : 'badge-default'}`}>
                       {!user.group || user.group === 'Unmanaged' ? 'Unmanaged' : user.group}
+                    </span>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard(user.group || 'Unmanaged')}
+                    >
+                      📋
                     </span>
                   </div>
                 </td>
 
                 {/* Телефон */}
-                <td
-                  onMouseEnter={(e) => handleMouseEnter(e, user.id, 'phone')}
-                  onMouseLeave={handleMouseLeave}
-                >
+                <td>
                   <div className="copyable-cell">
                     <span>{user.phone}</span>
+                    <span
+                      className="copy-icon"
+                      onClick={() => copyToClipboard(user.phone)}
+                    >
+                      📋
+                    </span>
                   </div>
                 </td>
 
