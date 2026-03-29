@@ -118,7 +118,7 @@ export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }
             <th onClick={() => onSort('email')} className="sortable">Email {getSortIcon('email')}</th>
             <th onClick={() => onSort('group')} className="sortable">Группа {getSortIcon('group')}</th>
             <th onClick={() => onSort('phone')} className="sortable">Телефон {getSortIcon('phone')}</th>
-            <th>Действия</th>
+            <th>Удалить</th>
           </tr>
         </thead>
         <tbody>
