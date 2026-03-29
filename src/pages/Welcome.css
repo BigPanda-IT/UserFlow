@@ -138,7 +138,6 @@
 /* ===== ВСПЛЫВАЮЩИЕ ПОДСКАЗКИ ===== */
 .feature-item {
   position: relative;
-  cursor: pointer;
 }
 
 .feature-tooltip {
