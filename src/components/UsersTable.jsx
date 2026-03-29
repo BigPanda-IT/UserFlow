@@ -11,13 +11,88 @@ export function UsersTable({ users, sortField, sortDirection, onSort, onDelete }
   };
 
   const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
     
-    // Удаляем все старые уведомления
+    // Для HTTP-серверов сразу используем fallback метод
+    // Clipboard API не работает в небезопасном контексте
+    const fallbackCopy = () => {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      textArea.style.opacity = '0'; // Скрываем элемент
+      document.body.appendChild(textArea);
+      
+      try {
+        // Выбираем текст и копируем
+        textArea.select();
+        textArea.setSelectionRange(0, 99999); // Для мобильных устройств
+        
+        const successful = document.execCommand('copy');
+        
+        if (successful) {
+          // Показываем уведомление об успешном копировании
+          showCopyNotification(text);
+        } else {
+          throw new Error('Fallback copy failed');
+        }
+      } catch (err) {
+        console.error('Fallback copy error:', err);
+        // Предлагаем пользователю скопировать вручную
+        promptManualCopy(text);
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    };
+    
+    // Функция показа уведомления
+    const showCopyNotification = (copiedText) => {
+      // Удаляем все старые уведомления
+      const oldNotifications = document.querySelectorAll('.copy-notification');
+      oldNotifications.forEach(notif => notif.remove());
+      
+      // Создаем уведомление
+      const notification = document.createElement('div');
+      notification.className = 'copy-notification';
+      notification.innerHTML = `
+        <span class="copy-notification-icon">✅</span>
+        <span>Скопировано: ${copiedText.length > 25 ? copiedText.slice(0, 25) + '...' : copiedText}</span>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Удаляем через 2 секунды с анимацией
+      setTimeout(() => {
+        notification.classList.add('hide');
+        setTimeout(() => notification.remove(), 300);
+      }, 2000);
+    };
+    
+    // Функция для ручного копирования
+    const promptManualCopy = (textToCopy) => {
+      // Создаем модальное окно для ручного копирования
+      const modal = document.createElement('div');
+      modal.className = 'manual-copy-modal';
+      
+      modal.innerHTML = `
+        <h3>Копирование текста</h3>
+        <p>Выделите текст ниже и нажмите Ctrl+C (Cmd+C на Mac)</p>
+        <textarea readonly>${textToCopy}</textarea>
+        <button onclick="this.parentElement.remove()">Закрыть</button>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      const textarea = modal.querySelector('textarea');
+      textarea.select();
+    };
+
+    console.log('HTTP сервер - используем fallback метод копирования');
+    fallbackCopy();
+
     const oldNotifications = document.querySelectorAll('.copy-notification');
     oldNotifications.forEach(notif => notif.remove());
     
-    // Создаем уведомление
     const notification = document.createElement('div');
     notification.className = 'copy-notification';
     notification.innerHTML = `
