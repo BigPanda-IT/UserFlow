@@ -22,25 +22,21 @@
 
 .copyable-cell {
   position: relative;
-  display: flex;
-  align-items: center;
+  display: inline-block;
   min-height: 20px;
-  padding-right: 10px;
 }
 
 .copy-icon {
   position: absolute;
-  right: 5px;
+  left: 100%;
+  margin-left: 4px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease;
   opacity: 0;
   pointer-events: none;
-  background: white;
-  padding: 2px 4px;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .copyable-cell:hover .copy-icon {
@@ -49,8 +45,7 @@
 }
 
 .copy-icon:hover {
-  transform: scale(1.1);
-  background: #f0f0f0;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .copy-notification {
